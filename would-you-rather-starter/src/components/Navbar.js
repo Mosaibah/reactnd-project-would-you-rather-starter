@@ -4,27 +4,21 @@ import { Redirect } from "react-router-dom";
 
 
 import { connect } from "react-redux";
-import { logoutUser, loginUser, store } from "../index.js";
+import { store } from "../index.js";
+import {logoutUser, loginUser} from "../actions/authActions"
 
 const Navbar = ({ Auth }) => {
 
-  // eslint-disable-next-line no-lone-blocks
-  // {Auth.authenticated && <Redirect  to="/" /> }
-  // console.log(Auth.authenticated)
-  // if (Auth.authenticated) {
-  //   console.log('indside if')
-  //   return(
-
-  //     <Redirect to="/"/>
-  //   )
-  // }
-
-  const handleLogIn = () => {
-    store.dispatch(logoutUser());
-  };
 
   const handleLogOut = () => {
+    store.dispatch(logoutUser());
+    return <Redirect to="/login" />
+  };
+
+  const handleLogIn = () => {
     store.dispatch(loginUser());
+    <Redirect to="/" />
+
   };
 
   
@@ -59,12 +53,13 @@ const Navbar = ({ Auth }) => {
             </li>
           </ul>
         </div>
-        <button onClick={handleLogOut} className="btn btn-outline-success">
+        {!Auth?(   
+        <button onClick={handleLogIn} className="btn btn-outline-success">
           Log in
         </button>
-        {!Auth.authenticated?''
+          )
         :(
-        <button onClick={handleLogIn} className="btn btn-outline-dark">
+        <button onClick={handleLogOut} className="btn btn-outline-dark">
           Log out
         </button>
         )}
@@ -74,7 +69,7 @@ const Navbar = ({ Auth }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { Auth: state };
+  return { Auth: state.authReducer.authenticated };
 };
 
 export default connect(mapStateToProps)(Navbar);

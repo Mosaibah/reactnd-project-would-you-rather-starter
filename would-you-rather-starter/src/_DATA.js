@@ -34,6 +34,16 @@ let users = {
   }
 }
 
+// 1-when you answer a question ( you only need question object as parameter)
+//  you have to edit user 
+//  you have to edit the questions with the provided answer 
+//
+// 2-when you create a new question 
+//  
+//
+//
+
+
 let questions = {
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
@@ -166,7 +176,7 @@ export function _saveQuestion (question) {
         }
       }
 
-      res(formattedQuestion)
+      res({questions, users})
     }, 1000)
   })
 }
@@ -196,7 +206,7 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
         }
       }
 
-      res()
+      res(questions)
     }, 500)
   })
 }

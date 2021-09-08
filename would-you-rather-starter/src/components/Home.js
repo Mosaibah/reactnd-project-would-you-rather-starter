@@ -1,22 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { logoutUser, loginUser, store } from "../index.js";
+import CardAnswers from "./CardsShow.js";
+import CardsShowAnswered from "./CardsShowAnswered.js";
 
-const Home = ({ Auth }) => {
-  console.log("inside home");
-  console.log(Auth);
+const Home = ({ Auth}) => {
 
-  const handleChange = () => {
-    store.dispatch(loginUser());
-    console.log("inside handle");
-    console.log(Auth);
-  };
   return (
     <div className="container mt-5">
-      <div className="btn btn-danger" onClick={handleChange}>
-        change
-      </div>
-
       <div className="accordion accordion-flush" id="accordionFlushExample">
         {/* First */}
         <div className="accordion-item">
@@ -40,25 +30,9 @@ const Home = ({ Auth }) => {
           >
             <div className="accordion-body">
               <div className="accordion-body">
-                <div className="card w-75 mx-auto">
-                  <div className="card-header">Name asks:</div>
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-3 border-end border-2 me-3">img</div>
-                      <div className="col">
-                        <h4>Would you rather</h4>
-                        <div className="text-center">
-                          <p className="lead">any question</p>
-                          <br />
-                          <p className="lead">or...</p>
-                          <button className="btn btn-success btn-lg px-5">
-                            Answer Poll
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {/* Card */}
+                <CardAnswers/>
+                {/* Card */}
               </div>
             </div>
           </div>
@@ -87,7 +61,9 @@ const Home = ({ Auth }) => {
           >
             <div className="accordion-body">
               <div className="card">
-                <div className="card-head">dfdf</div>
+                <div className="card-head">
+                  <CardsShowAnswered/>
+                </div>
               </div>
             </div>
           </div>
@@ -99,7 +75,10 @@ const Home = ({ Auth }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { Auth: state };
+  return {
+    Auth: state.authReducer.authenticated,
+    questions: state.questionsReducer.quesitons,
+  };
 };
 
 export default connect(mapStateToProps)(Home);

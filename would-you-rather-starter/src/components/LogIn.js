@@ -1,16 +1,35 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React, { Component } from "react";
+import {  Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logoutUser, loginUser, store } from "../index.js";
+import { store } from "../index.js";
+import { loginUser } from "../actions/authActions";
+import { addUser } from "../actions/usersActions";
 
 
-const LogIn = ({Auth}) => {
+    
+  class LogIn extends Component {
+    state = {
+      value:''
+    }
+    handleValue = (event) => {
+     this.setState({
+       value: event.target.value
+     })
+   }
+   
+   handleLogIn = () => {
+     store.dispatch(loginUser());
+     store.dispatch(addUser(this.state.value));
+   };
 
-  const handleLogIn = () => {
-    store.dispatch(loginUser());
-  }
-  return (
-    <div className="w-50 mx-auto">
+   handleUser = (users) => {
+    return Object.values(users);
+  };
+
+    render() {
+    
+    return (
+      <div className="w-50 mx-auto">
       <div className="w-75 mx-auto mt-5">
         <div className="card">
           <div className="card-header p-2 text-center">
@@ -23,32 +42,43 @@ const LogIn = ({Auth}) => {
             <h3 className="text-success mb-3">Sign In</h3>
             <div className="col-10 mt-3 mb-2">
               <div className="input-group mb-3">
-                <label className="input-group-text" htmlFor="inputGroupSelect01">
+                <label
+                  className="input-group-text"
+                  htmlFor="inputGroupSelect01"
+                >
                   Users
                 </label>
-                <select className="form-select" id="inputGroupSelect01">
+                <select className="form-select" id="inputGroupSelect01" onChange={this.handleValue}>
                   <option defaultValue disabled>
                     Choose...
                   </option>
-                  <option value="1">user 1</option>
-                  <option value="2">user 2</option>
-                  <option value="3">user 3</option>
+                  {this.props.users &&
+                    this.handleUser(this.props.users).map((user) => (
+                      <option key={user.id} value={user.id}>{user.name}</option>
+                    ))}
                 </select>
               </div>
             </div>
-            <button className="btn btn-success btn-lg col-10" onClick={handleLogIn}>
+            <Link
+              className="btn btn-success btn-lg col-10"
+              onClick={this.handleLogIn}
+              to="/"
+            >
               Login
-            </button>
+            </Link>
           </div>
         </div>
       </div>
     </div>
-  );
-};
-
+    )
+  }
+}
 
 const mapStateToProps = (state) => {
-  return { Auth: state };
+  return {
+    Auth: state.authReducer.authenticated,
+    users: state.fullusersReducer.users,
+  };
 };
 
 export default connect(mapStateToProps)(LogIn);
