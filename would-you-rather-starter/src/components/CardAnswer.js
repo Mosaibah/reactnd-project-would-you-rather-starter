@@ -61,7 +61,7 @@ class CardAnswer extends Component {
                       />
                       <label
                         className="form-check-label"
-                        for={this.state.question.optionOne.text}
+                        htmlFor={this.state.question.optionOne.text}
                       >
                         {this.state.question.optionOne.text}
                       </label>

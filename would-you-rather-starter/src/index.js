@@ -6,10 +6,10 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { saveState } from "./localStorage.js";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import { authReducer } from "./reducers/authReducer";
-import { usersReducer } from "./reducers/usersReducer";
-import { questionsReducer } from "./reducers/questionsReducer";
-import { fullusersReducer } from "./reducers/fullusersReducer";
+import { authReducer } from "reducers/authReducer";
+import { usersReducer } from "reducers/usersReducer";
+import { questionsReducer } from "reducers/questionsReducer";
+import { fullusersReducer } from "reducers/fullusersReducer";
 import { combineReducers } from "redux";
 
 // Redux Import
@@ -17,7 +17,12 @@ import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 
 export const store = createStore(
-  combineReducers({ usersReducer, authReducer, questionsReducer,fullusersReducer }),
+  combineReducers({
+    usersReducer,
+    authReducer,
+    questionsReducer,
+    fullusersReducer,
+  }),
   composeWithDevTools()
 );
 
