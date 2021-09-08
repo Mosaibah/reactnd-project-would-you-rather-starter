@@ -4,7 +4,7 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { saveState } from "./localStorage.js";
-import { composeWithDevTools } from "redux-devtools-extension";
+// import { composeWithDevTools } from "redux-devtools-extension";
 
 import { authReducer } from "reducers/authReducer";
 import { usersReducer } from "reducers/usersReducer";
@@ -22,8 +22,7 @@ export const store = createStore(
     authReducer,
     questionsReducer,
     fullusersReducer,
-  }),
-  composeWithDevTools()
+  })
 );
 
 store.subscribe(() => {
