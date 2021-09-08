@@ -1,8 +1,8 @@
 import {LOGOUT,LOGIN} from "../actions/authActions";
-import { loadState } from "../localStorage";
 
 
-export const authReducer = (state = loadState().authReducer, action) => {
+
+export const authReducer = (state = {}, action) => {
     switch (action.type) {
       case LOGIN:
         return {
